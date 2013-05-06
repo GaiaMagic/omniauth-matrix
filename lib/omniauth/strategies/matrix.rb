@@ -15,19 +15,18 @@ module OmniAuth
 
       info do
         {
-          :email => raw_info['info']['email']
+          :email    => raw_info['info']['email'],
         }
       end
 
-      #extra do
-        #{
-          #:first_name => raw_info['extra']['first_name'],
-          #:last_name  => raw_info['extra']['last_name']
-        #}
-      #end
+      extra do
+        {
+          :storm_id => raw_info['info']['storm_id']
+        }
+      end
 
       def raw_info
-        @raw_info ||= access_token.get("/auth/matrix/user.json?oauth_token=#{access_token.token}").parsed
+        @raw_info ||= access_token.get("/auth/matrix/user.json?access_token=#{access_token.token}").parsed
       end
     end
   end
