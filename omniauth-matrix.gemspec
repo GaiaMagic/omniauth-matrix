@@ -17,4 +17,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'omniauth', '~> 1.0'
   gem.add_dependency 'omniauth-oauth2', '~> 1.0'
+
+  gem.add_development_dependency 'minitest'
+  gem.add_development_dependency 'mocha'
+  gem.add_development_dependency 'rake'
 end

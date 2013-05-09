@@ -21,12 +21,23 @@ module OmniAuth
 
       extra do
         {
-          :storm_id => raw_info['info']['storm_id']
+          :storm_id => raw_info['extra']['storm_id']
         }
       end
 
       def raw_info
-        @raw_info ||= access_token.get("/auth/matrix/user.json?access_token=#{access_token.token}").parsed
+        @raw_info ||= access_token.get("/auth/matrix/user.json?access_token=#{access_token.token}").parsed || {}
+      end
+
+      def authorize_params
+        super.tap do |params|
+          if request.params["state"]
+            params[:state] = request.params["state"]
+
+            # to support omniauth-oauth2's auto csrf protection
+            session['omniauth.state'] = params[:state]
+          end
+        end
       end
     end
   end
